@@ -34,23 +34,27 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room Inicio, SalaPrincipal, SalaRituales, Almacen, SalaOfrendas, SalaDioses, Tumba;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        Inicio = new Room("Entrada a la tumba");
+        SalaPrincipal = new Room("En la sala principal de la tumba");
+        SalaRituales = new Room("Zona de rituales de la tumba");
+        Almacen = new Room("Almacen donde se guardan bienes para la proxima vida");
+        SalaOfrendas = new Room("Ofrendas que otorganban los vasayos a su cargo");
+        SalaDioses = new Room("Culto hacia los dioses");
+        Tumba = new Room("Donde descansa el faraon");
         
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        Inicio.setExits(SalaPrincipal, null, null, null);
+        SalaPrincipal.setExits(null, SalaRituales, Inicio, SalaOfrendas);
+        SalaRituales.setExits(Almacen, null, null, SalaPrincipal);
+        Almacen.setExits(null, null, SalaRituales, null);
+        SalaOfrendas.setExits(SalaDioses, SalaPrincipal, null, null);
+        SalaDioses.setExits(Tumba, null, SalaOfrendas, null);
+        Tumba.setExits(null, null, SalaDioses, null);
 
-        currentRoom = outside;  // start game outside
+        currentRoom = Inicio;  // start game outside
     }
 
     /**

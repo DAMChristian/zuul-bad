@@ -34,27 +34,28 @@ public class Game
      */
     private void createRooms()
     {
-        Room Inicio, SalaPrincipal, SalaRituales, Almacen, SalaOfrendas, SalaDioses, Tumba;
+        Room inicio, salaPrincipal, salaRituales, almacen, salaOfrendas, salaDioses, tumba;
 
         // create the rooms
-        Inicio = new Room("Entrada a la tumba");
-        SalaPrincipal = new Room("En la sala principal de la tumba");
-        SalaRituales = new Room("Zona de rituales de la tumba");
-        Almacen = new Room("Almacen donde se guardan bienes para la proxima vida");
-        SalaOfrendas = new Room("Ofrendas que otorganban los vasayos a su cargo");
-        SalaDioses = new Room("Culto hacia los dioses");
-        Tumba = new Room("Donde descansa el faraon");
+        inicio = new Room("Entrada a la tumba");
+        salaPrincipal = new Room("En la sala principal de la tumba");
+        salaRituales = new Room("Zona de rituales de la tumba");
+        almacen = new Room("Almacen donde se guardan bienes para la proxima vida");
+        salaOfrendas = new Room("Ofrendas que otorganban los vasayos a su cargo");
+        salaDioses = new Room("Culto hacia los dioses");
+        tumba = new Room("Donde descansa el faraon");
 
         // initialise room exits
-        Inicio.setExits(SalaPrincipal, null, null, null);
-        SalaPrincipal.setExits(null, SalaRituales, Inicio, SalaOfrendas);
-        SalaRituales.setExits(Almacen, null, null, SalaPrincipal);
-        Almacen.setExits(null, null, SalaRituales, null);
-        SalaOfrendas.setExits(SalaDioses, SalaPrincipal, null, null);
-        SalaDioses.setExits(Tumba, null, SalaOfrendas, null);
-        Tumba.setExits(null, null, SalaDioses, null);
+        //arriba, derecha, abajo, izquierda, abajo-derecha
+        inicio.setExits(salaPrincipal, null, null, null, null);
+        salaPrincipal.setExits(null, salaRituales, inicio, salaOfrendas, null);
+        salaRituales.setExits(almacen, null, null, salaPrincipal, null);
+        almacen.setExits(null, null, salaRituales, null, null);
+        salaOfrendas.setExits(salaDioses, salaPrincipal, null, null, null);
+        salaDioses.setExits(tumba, null, salaOfrendas, null, salaPrincipal);
+        tumba.setExits(null, null, salaDioses, null, null);
 
-        currentRoom = Inicio;  // start game outside
+        currentRoom = inicio;  // start game outside
     }
 
     /**

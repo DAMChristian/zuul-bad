@@ -37,24 +37,30 @@ public class Game
         Room inicio, salaPrincipal, salaRituales, almacen, salaOfrendas, salaDioses, tumba;
 
         // create the rooms
-        inicio = new Room("Entrada a la tumba");
-        salaPrincipal = new Room("En la sala principal de la tumba");
-        salaRituales = new Room("Zona de rituales de la tumba");
-        almacen = new Room("Almacen donde se guardan bienes para la proxima vida");
-        salaOfrendas = new Room("Ofrendas que otorganban los vasayos a su cargo");
-        salaDioses = new Room("Culto hacia los dioses");
-        tumba = new Room("Donde descansa el faraon");
+        inicio = new Room("La entrada a la tumba");
+        salaPrincipal = new Room("La sala principal de la tumba");
+        salaRituales = new Room("La Zona de rituales de la tumba");
+        almacen = new Room("El Almacen donde se guardan bienes para la proxima vida");
+        salaOfrendas = new Room("La sala de las ofrendas que otorganban los vasayos a su cargo");
+        salaDioses = new Room("La sala del Culto hacia los dioses");
+        tumba = new Room("La sala donde descansa el faraon");
 
         // initialise room exits
-        //arriba, derecha, abajo, izquierda, abajo-derecha
-        inicio.setExits(salaPrincipal, null, null, null, null);
-        salaPrincipal.setExits(null, salaRituales, inicio, salaOfrendas, null);
-        salaRituales.setExits(almacen, null, null, salaPrincipal, null);
-        almacen.setExits(null, null, salaRituales, null, null);
-        salaOfrendas.setExits(salaDioses, salaPrincipal, null, null, null);
-        salaDioses.setExits(tumba, null, salaOfrendas, null, salaPrincipal);
-        tumba.setExits(null, null, salaDioses, null, null);
-
+        //arriba, derecha, abajo, izquierda, abajo-derecha        
+        inicio.setExit("north", salaPrincipal);
+        salaPrincipal.setExit("east", salaRituales);
+        salaPrincipal.setExit("south", inicio);
+        salaPrincipal.setExit("west", salaOfrendas);
+        salaRituales.setExit("north", almacen);
+        salaRituales.setExit("west", salaPrincipal);
+        almacen.setExit("south", salaRituales);
+        salaOfrendas.setExit("north", salaDioses);
+        salaOfrendas.setExit("east", salaPrincipal);
+        salaDioses.setExit("north", tumba);
+        salaDioses.setExit("south", salaOfrendas);
+        salaDioses.setExit("surEste", salaPrincipal);
+        tumba.setExit("south", salaDioses);
+        
         currentRoom = inicio;  // start game outside
     }
 
@@ -148,23 +154,8 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = null;
-        if(direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
-        }
-        if(direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
-        }
-        if(direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
-        }
-        if(direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
-        }
-        if(direction.equals("SouthEast")) {
-            nextRoom = currentRoom.surEsteExit;
-        }
-
+        Room nextRoom = currentRoom.getExit(direction);
+        
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
@@ -194,23 +185,8 @@ public class Game
      * Imprime la descripcion de la localización actual.
      */
     private void printLocationInfo() {
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
-        if(currentRoom.surEsteExit != null) {
-            System.out.print("southEast ");
-        }
+        System.out.println("Estas en: " + currentRoom.getDescription());
+        System.out.print(currentRoom.getExitString());
         System.out.println();
     }
 }

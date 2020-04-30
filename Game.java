@@ -161,6 +161,9 @@ public class Game
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
+        if(direction.equals("SouthEast")) {
+            nextRoom = currentRoom.surEsteExit;
+        }
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
@@ -204,6 +207,9 @@ public class Game
         }
         if(currentRoom.westExit != null) {
             System.out.print("west ");
+        }
+        if(currentRoom.surEsteExit != null) {
+            System.out.print("southEast ");
         }
         System.out.println();
     }

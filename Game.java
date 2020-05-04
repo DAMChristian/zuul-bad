@@ -34,7 +34,9 @@ public class Game
      */
     private void createRooms()
     {
-        Room inicio, salaPrincipal, salaRituales, almacen, salaOfrendas, salaDioses, tumba;
+        Room inicio, salaPrincipal, salaRituales, almacen, 
+             salaOfrendas, salaDioses, tumba, salaEsclavos,
+             salaRiquezas;
 
         // create the rooms
         inicio = new Room("La entrada a la tumba");
@@ -44,22 +46,35 @@ public class Game
         salaOfrendas = new Room("La sala de las ofrendas que otorganban los vasayos a su cargo");
         salaDioses = new Room("La sala del Culto hacia los dioses");
         tumba = new Room("La sala donde descansa el faraon");
-
+        salaEsclavos = new Room("La sala de los esclavos");
+        salaRiquezas = new Room("La sala de las riquezas del faraon");
         // initialise room exits
         //arriba, derecha, abajo, izquierda, abajo-derecha        
         inicio.setExit("north", salaPrincipal);
+        
         salaPrincipal.setExit("east", salaRituales);
         salaPrincipal.setExit("south", inicio);
         salaPrincipal.setExit("west", salaOfrendas);
+        
         salaRituales.setExit("north", almacen);
         salaRituales.setExit("west", salaPrincipal);
+        
         almacen.setExit("south", salaRituales);
+        almacen.setExit("norEste", salaRiquezas);
+        
         salaOfrendas.setExit("north", salaDioses);
         salaOfrendas.setExit("east", salaPrincipal);
+        salaOfrendas.setExit("surOeste", salaEsclavos);
+        
         salaDioses.setExit("north", tumba);
         salaDioses.setExit("south", salaOfrendas);
         salaDioses.setExit("surEste", salaPrincipal);
+        
         tumba.setExit("south", salaDioses);
+        
+        salaEsclavos.setExit("norEste", salaOfrendas);
+        
+        salaRiquezas.setExit("surOeste", almacen);
         
         currentRoom = inicio;  // start game outside
     }

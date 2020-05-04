@@ -200,8 +200,7 @@ public class Game
      * Imprime la descripcion de la localización actual.
      */
     private void printLocationInfo() {
-        System.out.println("Estas en: " + currentRoom.getDescription());
-        System.out.print(currentRoom.getExitString());
+        System.out.println(currentRoom.getLongDescription());
         System.out.println();
     }
 }

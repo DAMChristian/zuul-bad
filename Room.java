@@ -59,11 +59,11 @@ public class Room
     public String getExitString() {
         String aDevolver = "Salidas: ";
         Set<String> salidasExistentes = salida.keySet();
-        
+
         for (String direccion : salidasExistentes) {
             aDevolver += direccion + " ";
         }
-        
+
         return aDevolver;
     }
 
@@ -75,5 +75,16 @@ public class Room
      */
     public void setExit(String direccion, Room sala) {
         salida.put(direccion, sala);
+    }
+
+    /**
+     * Devuelve un texto con la descripcion completa de la habitacion, que 
+     * incluye la descripcion corta de la sala y las salidas de la misma. Por ejemplo:
+     *     You are in the lab
+     *     Exits: north west southwest
+     * @return Una descripcion completa de la habitacion incluyendo sus salidas
+     */
+    public String getLongDescription() {
+        return "Estas en: " + getDescription() + "\n" + getExitString();
     }
 }

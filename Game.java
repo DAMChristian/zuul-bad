@@ -35,8 +35,8 @@ public class Game
     private void createRooms()
     {
         Room inicio, salaPrincipal, salaRituales, almacen, 
-             salaOfrendas, salaDioses, tumba, salaEsclavos,
-             salaRiquezas;
+        salaOfrendas, salaDioses, tumba, salaEsclavos,
+        salaRiquezas;
 
         // create the rooms
         inicio = new Room("La entrada a la tumba");
@@ -51,31 +51,31 @@ public class Game
         // initialise room exits
         //arriba, derecha, abajo, izquierda, abajo-derecha        
         inicio.setExit("north", salaPrincipal);
-        
+
         salaPrincipal.setExit("east", salaRituales);
         salaPrincipal.setExit("south", inicio);
         salaPrincipal.setExit("west", salaOfrendas);
-        
+
         salaRituales.setExit("north", almacen);
         salaRituales.setExit("west", salaPrincipal);
-        
+
         almacen.setExit("south", salaRituales);
         almacen.setExit("norEste", salaRiquezas);
-        
+
         salaOfrendas.setExit("north", salaDioses);
         salaOfrendas.setExit("east", salaPrincipal);
         salaOfrendas.setExit("surOeste", salaEsclavos);
-        
+
         salaDioses.setExit("north", tumba);
         salaDioses.setExit("south", salaOfrendas);
         salaDioses.setExit("surEste", salaPrincipal);
-        
+
         tumba.setExit("south", salaDioses);
-        
+
         salaEsclavos.setExit("norEste", salaOfrendas);
-        
+
         salaRiquezas.setExit("surOeste", almacen);
-        
+
         currentRoom = inicio;  // start game outside
     }
 
@@ -131,6 +131,9 @@ public class Game
         else if (commandWord.equals("go")) {
             goRoom(command);
         }
+        else if (commandWord.equals("look")) {
+            look();
+        }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
@@ -170,7 +173,7 @@ public class Game
 
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
-        
+
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
@@ -195,12 +198,19 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-    
+
     /**
      * Imprime la descripcion de la localización actual.
      */
     private void printLocationInfo() {
         System.out.println(currentRoom.getLongDescription());
         System.out.println();
+    }
+
+    /**
+     * Imprimir por pantalla donde esta nuestro personaje
+     */
+    private void look() {
+        System.out.println(currentRoom.getLongDescription());
     }
 }

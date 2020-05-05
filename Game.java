@@ -157,7 +157,7 @@ public class Game
         System.out.println("por la tumba del faraon.");
         System.out.println();
         System.out.println("Tus comandos son:");
-        parser.showCommands();
+        System.out.println(parser.showCommands());
     }
 
     /** 

@@ -39,15 +39,15 @@ public class Game
         salaRiquezas;
 
         // create the rooms
-        inicio = new Room("La entrada a la tumba");
-        salaPrincipal = new Room("La sala principal de la tumba");
-        salaRituales = new Room("La Zona de rituales de la tumba");
-        almacen = new Room("El Almacen donde se guardan bienes para la proxima vida");
-        salaOfrendas = new Room("La sala de las ofrendas que otorganban los vasayos a su cargo");
-        salaDioses = new Room("La sala del Culto hacia los dioses");
-        tumba = new Room("La sala donde descansa el faraon");
-        salaEsclavos = new Room("La sala de los esclavos");
-        salaRiquezas = new Room("La sala de las riquezas del faraon");
+        inicio = new Room("La entrada a la tumba", "", 0);
+        salaPrincipal = new Room("La sala principal de la tumba", "", 0);
+        salaRituales = new Room("La Zona de rituales de la tumba", "", 0);
+        almacen = new Room("El Almacen donde se guardan bienes para la proxima vida", "", 0);
+        salaOfrendas = new Room("La sala de las ofrendas que otorganban los vasayos a su cargo", "", 0);
+        salaDioses = new Room("La sala del Culto hacia los dioses", "Pergamino", 1);
+        tumba = new Room("La sala donde descansa el faraon", "Mascara del faraon", 1);
+        salaEsclavos = new Room("La sala de los esclavos", "", 0);
+        salaRiquezas = new Room("La sala de las riquezas del faraon","Lingotes de Oro", 2);
         // initialise room exits
         //arriba, derecha, abajo, izquierda, abajo-derecha        
         inicio.setExit("north", salaPrincipal);

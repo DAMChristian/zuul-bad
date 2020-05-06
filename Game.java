@@ -1,3 +1,4 @@
+import java.util.Stack;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,8 +20,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Room lastRoom;
-    
+    private Stack<Room> rooms;
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -28,6 +29,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        rooms = new Stack<>();
     }
 
     /**
@@ -49,7 +51,7 @@ public class Game
         tumba = new Room("La sala donde descansa el faraon");
         salaEsclavos = new Room("La sala de los esclavos");
         salaRiquezas = new Room("La sala de las riquezas del faraon");
-        
+
         // initialise room exits
         //arriba, derecha, abajo, izquierda, abajo-derecha        
         inicio.setExit("north", salaPrincipal);
@@ -77,8 +79,7 @@ public class Game
         salaRiquezas.addItem("Lingotes de Oro", 2);
         salaEsclavos.addItem("Anillo esmeralda", 1);
         almacen.addItem("Llave desconocida", 1);
-        
-        
+
         currentRoom = inicio;  // start game outside
     }
 
@@ -187,7 +188,7 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
-            lastRoom = currentRoom;
+            rooms.push(currentRoom);
             currentRoom = nextRoom;
             printLocationInfo();
         }
@@ -223,21 +224,20 @@ public class Game
     private void look() {
         System.out.println(currentRoom.getLongDescription());
     }
-    
+
     private void eat() {
         System.out.println("acabas de comer y ya no tienes hambre");
     }
-    
+
     private void back() {
-        if (lastRoom == null) {
-            System.out.println("No puedes retroceder");
-        }
-        else if (currentRoom == lastRoom) {
-            System.out.println("No puedes volver a la sala porque ya estas en ella");
+        if (!rooms.isEmpty()) {
+            currentRoom = rooms.pop();
+            printLocationInfo();            
         }
         else {
-            currentRoom = lastRoom;
-            printLocationInfo();
+            System.out.println("No puedes retroceder mas.");
         }
+
     }
 }
+

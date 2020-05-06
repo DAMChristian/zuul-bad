@@ -21,7 +21,7 @@ public class Item
      */
     public String description()
     {
-        return itemDescription + " y su peso es " 
+        return itemDescription + " peso " 
                        + itemWeight;
     }
 

@@ -39,46 +39,45 @@ public class Game
         salaRiquezas;
 
         // create the rooms
-        inicio = new Room("La entrada a la tumba", null);
-        salaPrincipal = new Room("La sala principal de la tumba", null);
-        salaRituales = new Room("La Zona de rituales de la tumba", null);
-        almacen = new Room("El Almacen donde se guardan bienes para la proxima vida", null);
-        salaOfrendas = new Room("La sala de las ofrendas que otorganban los vasayos a su cargo", null);
-        Item pergamino = new Item("Pergamino", 1);
-        salaDioses = new Room("La sala del Culto hacia los dioses", pergamino);
-        Item mascara = new Item("Mascara del faraon", 1);
-        tumba = new Room("La sala donde descansa el faraon", mascara);
-        salaEsclavos = new Room("La sala de los esclavos", null);
-        Item oro = new Item("Lingotes de Oro", 2);
-        salaRiquezas = new Room("La sala de las riquezas del faraon", oro);
+        inicio = new Room("La entrada a la tumba");
+        salaPrincipal = new Room("La sala principal de la tumba");
+        salaRituales = new Room("La Zona de rituales de la tumba");
+        almacen = new Room("El Almacen donde se guardan bienes para la proxima vida");
+        salaOfrendas = new Room("La sala de las ofrendas que otorganban los vasayos a su cargo");
+        salaDioses = new Room("La sala del Culto hacia los dioses");
+        tumba = new Room("La sala donde descansa el faraon");
+        salaEsclavos = new Room("La sala de los esclavos");
+        salaRiquezas = new Room("La sala de las riquezas del faraon");
+        
         // initialise room exits
         //arriba, derecha, abajo, izquierda, abajo-derecha        
         inicio.setExit("north", salaPrincipal);
-
         salaPrincipal.setExit("east", salaRituales);
         salaPrincipal.setExit("south", inicio);
         salaPrincipal.setExit("west", salaOfrendas);
-
         salaRituales.setExit("north", almacen);
         salaRituales.setExit("west", salaPrincipal);
-
         almacen.setExit("south", salaRituales);
         almacen.setExit("norEste", salaRiquezas);
-
         salaOfrendas.setExit("north", salaDioses);
         salaOfrendas.setExit("east", salaPrincipal);
         salaOfrendas.setExit("surOeste", salaEsclavos);
-
         salaDioses.setExit("north", tumba);
         salaDioses.setExit("south", salaOfrendas);
         salaDioses.setExit("surEste", salaPrincipal);
-
         tumba.setExit("south", salaDioses);
-
         salaEsclavos.setExit("norEste", salaOfrendas);
-
         salaRiquezas.setExit("surOeste", almacen);
 
+        //Añadir objetos
+        tumba.addItem("Mascara del faraon", 1);
+        tumba.addItem("Cetro del faraon", 5);
+        salaDioses.addItem("Pergamino", 1);
+        salaRiquezas.addItem("Lingotes de Oro", 2);
+        salaEsclavos.addItem("Anillo esmeralda", 1);
+        almacen.addItem("Llave desconocida", 1);
+        
+        
         currentRoom = inicio;  // start game outside
     }
 

@@ -1,5 +1,7 @@
 import java.util.HashMap;
 import java.util.Set;
+import java.util.ArrayList;
+
 /**
  * Class Room - a room in an adventure game.
  *
@@ -18,7 +20,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> salida;
-    private Item item;
+    private ArrayList<Item> item;
 
     /**
      * Create a room described "description". Initially, it has
@@ -26,10 +28,10 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description, Item item) 
+    public Room(String description) 
     {
         this.description = description;
-        this.item = item;
+        item = new ArrayList<>();
         salida = new HashMap<>();
     }
 
@@ -88,9 +90,24 @@ public class Room
      */
     public String getLongDescription() {
         String aDevolver = "Estas en: " + getDescription() + "\n" + getExitString() + "\n";
-        if(item != null) {
-            aDevolver += "Esta sala contiene: " + item.description();
+        if(item.size() > 0) {
+            aDevolver += "Esta sala contiene: ";
+            for (Item itemDesc : item) {
+                aDevolver += itemDesc.description() + " ";
+            }
         }
         return aDevolver;
+    }
+    
+    /**
+     * Devuelve un texto con la descripcion completa de la habitacion, que 
+     * incluye la descripcion corta de la sala y las salidas de la misma. Por ejemplo:
+     *     You are in the lab
+     *     Exits: north west southwest
+     * @return Una descripcion completa de la habitacion incluyendo sus salidas
+     */
+    public void addItem(String ItemDesc, int ItemWeight) {
+        Item item = new Item(ItemDesc, ItemWeight);
+        this.item.add(item);
     }
 }

@@ -18,8 +18,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> salida;
-    private String itemDescription;
-    private int itemWeight;
+    private Item item;
 
     /**
      * Create a room described "description". Initially, it has
@@ -27,11 +26,10 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description, String itemDescription, int itemWeight) 
+    public Room(String description, Item item) 
     {
         this.description = description;
-        this.itemDescription = itemDescription;
-        this.itemWeight = itemWeight;
+        this.item = item;
         salida = new HashMap<>();
     }
 
@@ -90,9 +88,8 @@ public class Room
      */
     public String getLongDescription() {
         String aDevolver = "Estas en: " + getDescription() + "\n" + getExitString() + "\n";
-        if(!itemDescription.equals("")) {
-            aDevolver += "Esta sala contiene: " + itemDescription + " y su peso es " 
-                       + itemWeight;
+        if(item != null) {
+            aDevolver += item.description();
         }
         return aDevolver;
     }

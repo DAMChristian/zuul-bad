@@ -21,7 +21,7 @@ public class Item
      */
     public String description()
     {
-        return "Esta sala contiene: " + itemDescription + " y su peso es " 
+        return itemDescription + " y su peso es " 
                        + itemWeight;
     }
 

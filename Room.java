@@ -89,7 +89,7 @@ public class Room
     public String getLongDescription() {
         String aDevolver = "Estas en: " + getDescription() + "\n" + getExitString() + "\n";
         if(item != null) {
-            aDevolver += item.description();
+            aDevolver += "Esta sala contiene: " + item.description();
         }
         return aDevolver;
     }

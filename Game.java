@@ -1,4 +1,4 @@
-import java.util.Stack;
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,23 +19,22 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
-    private Stack<Room> rooms;
+    private Player jugador;
+
 
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        createRooms();
         parser = new Parser();
-        rooms = new Stack<>();
+        jugador = new Player(createRooms());
     }
 
     /**
      * Create all the rooms and link their exits together.
      */
-    private void createRooms()
+    private Room createRooms()
     {
         Room inicio, salaPrincipal, salaRituales, almacen, 
         salaOfrendas, salaDioses, tumba, salaEsclavos,
@@ -80,7 +79,7 @@ public class Game
         salaEsclavos.addItem("Anillo esmeralda", 1);
         almacen.addItem("Llave desconocida", 1);
 
-        currentRoom = inicio;  // start game outside
+        return inicio;  // start game outside
     }
 
     /**
@@ -111,7 +110,7 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        printLocationInfo();
+        jugador.look();
     }
 
     /**
@@ -133,16 +132,16 @@ public class Game
             printHelp();
         }
         else if (commandWord.equals("go")) {
-            goRoom(command);
+            jugador.goRoom(command);
         }
         else if (commandWord.equals("look")) {
-            look();
+            jugador.look();
         }
         else if (commandWord.equals("eat")) {
-            eat();
+            jugador.eat();
         }
         else if (commandWord.equals("back")) {
-            back();
+            jugador.back();
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
@@ -168,33 +167,6 @@ public class Game
     }
 
     /** 
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        }
-        else {
-            rooms.push(currentRoom);
-            currentRoom = nextRoom;
-            printLocationInfo();
-        }
-    }
-
-    /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
      * @return true, if this command quits the game, false otherwise.
@@ -210,34 +182,7 @@ public class Game
         }
     }
 
-    /**
-     * Imprime la descripcion de la localización actual.
-     */
-    private void printLocationInfo() {
-        System.out.println(currentRoom.getLongDescription());
-        System.out.println();
-    }
 
-    /**
-     * Imprimir por pantalla donde esta nuestro personaje
-     */
-    private void look() {
-        System.out.println(currentRoom.getLongDescription());
-    }
-
-    private void eat() {
-        System.out.println("acabas de comer y ya no tienes hambre");
-    }
-
-    private void back() {
-        if (!rooms.isEmpty()) {
-            currentRoom = rooms.pop();
-            printLocationInfo();            
-        }
-        else {
-            System.out.println("No puedes retroceder mas.");
-        }
-
-    }
+    
 }
 

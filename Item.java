@@ -6,14 +6,16 @@ public class Item
 {
     private String itemDescription;
     private int itemWeight;
+    private String id;
     
     /**
      * Nos crea un item
      */
-    public Item( String itemDescription, int itemWeight)
+    public Item(String itemDescription, int itemWeight, String id)
     {
         this.itemDescription = itemDescription;
         this.itemWeight = itemWeight;
+        this.id = id;
     }
 
     /**
@@ -22,7 +24,22 @@ public class Item
     public String description()
     {
         return itemDescription + " peso " 
-                       + itemWeight;
+                       + itemWeight + " su id: " + id;
+    }
+    
+    public String getItemDescription()
+    {
+        return itemDescription;
+    }
+    
+    public int getWeight()
+    {
+        return itemWeight;
+    }
+    
+    public String getId()
+    {
+        return id;
     }
 
 }

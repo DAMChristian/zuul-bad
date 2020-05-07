@@ -1,4 +1,5 @@
 import java.util.Stack;
+import java.util.ArrayList;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -21,6 +22,8 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Stack<Room> rooms;
+    private int pesoItems;
+    private ArrayList<Item> inventario;
 
     /**
      * Create the game and initialise its internal map.
@@ -30,6 +33,8 @@ public class Game
         createRooms();
         parser = new Parser();
         rooms = new Stack<>();
+        pesoItems = 0;
+        inventario = new ArrayList<>();
     }
 
     /**
@@ -73,14 +78,14 @@ public class Game
         salaRiquezas.setExit("surOeste", almacen);
 
         //Añadir objetos
-        tumba.addItem("Mascara del faraon", 1);
-        tumba.addItem("Cetro del faraon", 5);
-        salaDioses.addItem("Pergamino", 1);
-        salaRiquezas.addItem("Lingotes de Oro", 2);
-        salaEsclavos.addItem("Anillo esmeralda", 1);
-        almacen.addItem("Llave desconocida", 1);
+        tumba.addItem("Mascara del faraon", 3, "Mascara");
+        tumba.addItem("Cetro del faraon", 5 , "Cetro");
+        salaDioses.addItem("Pergamino", 2, "Pergamino");
+        salaRiquezas.addItem("Lingotes de Oro", 4, "Oro");
+        salaEsclavos.addItem("Anillo esmeralda", 1, "Anillo");
+        almacen.addItem("Llave desconocida", 1, "Llave");
 
-        currentRoom = inicio;  // start game outside
+        currentRoom = salaDioses;  // start game outside
     }
 
     /**
@@ -143,6 +148,15 @@ public class Game
         }
         else if (commandWord.equals("back")) {
             back();
+        }
+        else if (commandWord.equals("take")) {
+            take(command);
+        }
+        else if (commandWord.equals("drop")) {
+            drop(command);
+        }
+        else if (commandWord.equals("items")) {
+            items();
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
@@ -238,6 +252,76 @@ public class Game
             System.out.println("No puedes retroceder mas.");
         }
 
+    }
+
+    public void take(Command comando) {
+        if(!comando.hasSecondWord()) {
+            System.out.println("coger que?");
+        }
+        else {
+            if (currentRoom.getItems().size() != 0) {
+                boolean itemCogido = false;
+                int contador = 0;
+                ArrayList<Item> itemsRoom = currentRoom.getItems();
+                while (contador < itemsRoom.size() && !itemCogido) {
+                    if (itemsRoom.get(contador).getId().equals(comando.getSecondWord()) 
+                        && pesoItems + itemsRoom.get(contador).getWeight() <= 7 ) {
+                        inventario.add(itemsRoom.get(contador));
+                        itemCogido = true;
+                        pesoItems = pesoItems + itemsRoom.get(contador).getWeight();
+                        System.out.println(itemsRoom.get(contador).getId() + " ha sido"
+                            + " añadido a tu inventario");
+                        currentRoom.deleteItems(comando.getSecondWord());
+                    }
+                    else if (!itemCogido && !itemsRoom.get(contador).getId().equals(comando.getSecondWord()) 
+                             && contador + 1 == itemsRoom.size()) {
+                        System.out.println("No hay ningun objeto con ese nombre");
+                    }
+                    else if (!itemCogido && pesoItems + itemsRoom.get(contador).getWeight() > 7) {
+                        System.out.println("No puedes llevar tanto peso");
+                    }
+
+                    contador++;
+                }
+
+            }
+            else {
+                System.out.println("Esta sala no contiene objetos");
+            }
+        }
+    }
+
+    public void drop(Command comando) {
+        boolean itemTirado = false;
+        int contador = 0;
+        while (!itemTirado && contador < inventario.size()) {
+            if (inventario.get(contador).getId().equals(comando.getSecondWord())) {
+                currentRoom.addItem(inventario.get(contador).getItemDescription()
+                , inventario.get(contador).getWeight()
+                , inventario.get(contador).getId());
+                System.out.println(inventario.get(contador).getId() + " ha sido "
+                    + "quitado de tu inventario");
+                pesoItems -= inventario.get(contador).getWeight();
+                inventario.remove(contador);
+                itemTirado = true;
+            }
+            contador++;
+        }
+        if (!itemTirado) {
+            System.out.println("No puedes tirar " + comando.getSecondWord() + " por"
+                + "que no lo tienes en tu inventario");
+        }
+    }
+
+    public void items() {
+        if (inventario.size() == 0) {
+            System.out.println("No llevas ningun objeto");
+        }
+        else {
+            for (Item item : inventario) {
+                System.out.println(item.description());
+            }
+        }
     }
 }
 

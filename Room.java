@@ -127,4 +127,19 @@ public class Room
             contador++;
         }
     }
+    
+    public Item getItem(String id) {
+        Item aDevolver = null;
+        boolean encontrado = false;
+        int contador = 0;
+        while (contador < item.size() && !encontrado) {
+            if (item.get(contador).getItemId().equals(id)) {
+                aDevolver = item.get(contador);
+                encontrado = true;
+            }
+            contador++;
+        }
+
+        return aDevolver;
+    }
 }

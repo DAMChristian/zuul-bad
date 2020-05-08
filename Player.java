@@ -91,34 +91,32 @@ public class Player
             if (currentRoom.getItems().size() != 0) {
                 boolean itemCogido = false;
                 int contador = 0;
+                String itemStatus = "No hay ningun objeto con ese nombre";
                 ArrayList<Item> itemsRoom = currentRoom.getItems();
                 while (contador < itemsRoom.size() && !itemCogido) {
-                    if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
-                    && itemsRoom.get(contador).getItemPickUp()  
-                    && itemsPeso + itemsRoom.get(contador).getItemWeight() <= maxWeight) {
-                        inventario.add(itemsRoom.get(contador));
-                        itemCogido = true;
-                        itemsPeso += itemsRoom.get(contador).getItemWeight();
-                        System.out.println(itemsRoom.get(contador).getItemId() + " ha sido"
-                            + " añadido a tu inventario");
-                        currentRoom.deleteItems(comando.getSecondWord());
+                    if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord())) {
+                        if (itemsRoom.get(contador).getItemPickUp()) {
+                            if (itemsPeso + itemsRoom.get(contador).getItemWeight() <= maxWeight) {
+                                inventario.add(itemsRoom.get(contador));
+                                itemCogido = true;
+                                itemsPeso += itemsRoom.get(contador).getItemWeight();
+                                itemStatus = itemsRoom.get(contador).getItemId() + " ha sido"
+                                    + " añadido a tu inventario";
+                                currentRoom.deleteItems(comando.getSecondWord());
+                            }
+                            else {
+                                itemStatus = "No puedes llevar tanto peso";
+                            }
+                        }
+                        else {
+                            itemStatus = "No puedes recoger ese objeto";  
+                        }
                     }
-                    else if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
-                    && !itemsRoom.get(contador).getItemPickUp()) {
-                        System.out.println("No puedes recoger ese objeto");
-                        itemCogido = true;
-                    }
-                    else if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
-                    && itemsRoom.get(contador).getItemPickUp()  
-                    && itemsPeso + itemsRoom.get(contador).getItemWeight() > maxWeight) {
-                        System.out.println("No puedes llevar tanto peso");
-                        itemCogido = true;
-                    }
+
                     contador++;
                 }
-                if (!itemCogido) {
-                    System.out.println("No hay ningun objeto con ese nombre");
-                }
+                
+                System.out.println(itemStatus);
             }
             else {
                 System.out.println("Esta sala no contiene objetos");
@@ -177,13 +175,13 @@ public class Player
             int contador = 0;
             while (!itemLeido && contador < inventario.size()) {
                 if (inventario.get(contador).getItemId().equals(comando.getSecondWord())
-                    && inventario.get(contador).getItemId().equals("hechizo")) {
+                && inventario.get(contador).getItemId().equals("hechizo")) {
                     itemLeido = true;
                     itemsPeso -= inventario.get(contador).getItemWeight();
                     inventario.remove(contador);
                     maxWeight += 4;
                     System.out.println("Tu peso se ha aumentado en 4, tu peso total es de: "
-                                        + maxWeight);
+                        + maxWeight);
                 }
                 contador++;
             }

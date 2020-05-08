@@ -7,15 +7,17 @@ public class Item
     private String itemDescription;
     private int itemWeight;
     private String itemId;
+    private boolean itemPickUp;
     
     /**
      * Nos crea un item
      */
-    public Item( String itemDescription, int itemWeight, String itemId)
+    public Item( String itemDescription, int itemWeight, String itemId, boolean itemPickUp)
     {
         this.itemDescription = itemDescription;
         this.itemWeight = itemWeight;
         this.itemId = itemId;
+        this.itemPickUp = itemPickUp;
     }
 
     /**
@@ -37,5 +39,9 @@ public class Item
     
     public String getItemId() {
         return itemId;
+    }
+    
+    public boolean getItemPickUp() {
+        return itemPickUp;
     }
 }

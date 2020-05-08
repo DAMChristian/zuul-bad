@@ -90,12 +90,17 @@ public class Player
                 ArrayList<Item> itemsRoom = currentRoom.getItems();
                 while (contador < itemsRoom.size() && !itemCogido) {
                     if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
-                    ) {
+                        && itemsRoom.get(contador).getItemPickUp()) {
                         inventario.add(itemsRoom.get(contador));
                         itemCogido = true;
                         System.out.println(itemsRoom.get(contador).getItemId() + " ha sido"
                             + " añadido a tu inventario");
                         currentRoom.deleteItems(comando.getSecondWord());
+                    }
+                    else if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
+                        && !itemsRoom.get(contador).getItemPickUp()) {
+                        System.out.println("No puedes recoger ese objeto");
+                        itemCogido = true;
                     }
                     contador++;
                 }

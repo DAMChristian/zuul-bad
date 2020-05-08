@@ -72,12 +72,12 @@ public class Game
         salaRiquezas.setExit("surOeste", almacen);
 
         //Añadir objetos
-        tumba.addItem("Mascara del faraon", 4, "mascara");
-        tumba.addItem("Cetro del faraon", 5, "cetro");
-        salaDioses.addItem("Pergamino", 3, "pergamino");
-        salaRiquezas.addItem("Lingotes de Oro", 6, "oro");
-        salaEsclavos.addItem("Anillo esmeralda", 2, "anillo");
-        almacen.addItem("Llave desconocida", 1, "llave");
+        tumba.addItem("Mascara del faraon", 4, "mascara", true);
+        tumba.addItem("Cetro del faraon", 5, "cetro", true);
+        salaDioses.addItem("Pergamino", 3, "pergamino", false);
+        salaRiquezas.addItem("Lingotes de Oro", 6, "oro", true);
+        salaEsclavos.addItem("Anillo esmeralda", 2, "anillo", true);
+        almacen.addItem("Llave desconocida", 1, "llave", true);
 
         return inicio;  // start game outside
     }

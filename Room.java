@@ -106,8 +106,8 @@ public class Room
      *     Exits: north west southwest
      * @return Una descripcion completa de la habitacion incluyendo sus salidas
      */
-    public void addItem(String itemDesc, int itemWeight, String itemId) {
-        Item item = new Item(itemDesc, itemWeight, itemId);
+    public void addItem(String itemDesc, int itemWeight, String itemId, boolean itemPickUp) {
+        Item item = new Item(itemDesc, itemWeight, itemId, itemPickUp);
         this.item.add(item);
     }
     

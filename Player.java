@@ -78,8 +78,8 @@ public class Player
             System.out.println("No puedes retroceder mas.");
         }
     }
-    
-        public void take(Command comando) {
+
+    public void take(Command comando) {
         if(!comando.hasSecondWord()) {
             System.out.println("coger que?");
         }
@@ -90,7 +90,7 @@ public class Player
                 ArrayList<Item> itemsRoom = currentRoom.getItems();
                 while (contador < itemsRoom.size() && !itemCogido) {
                     if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
-                        && itemsRoom.get(contador).getItemPickUp()) {
+                    && itemsRoom.get(contador).getItemPickUp()) {
                         inventario.add(itemsRoom.get(contador));
                         itemCogido = true;
                         System.out.println(itemsRoom.get(contador).getItemId() + " ha sido"
@@ -98,7 +98,7 @@ public class Player
                         currentRoom.deleteItems(comando.getSecondWord());
                     }
                     else if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
-                        && !itemsRoom.get(contador).getItemPickUp()) {
+                    && !itemsRoom.get(contador).getItemPickUp()) {
                         System.out.println("No puedes recoger ese objeto");
                         itemCogido = true;
                     }
@@ -111,6 +111,20 @@ public class Player
             else {
                 System.out.println("Esta sala no contiene objetos");
             }
+        }
+    }
+    
+    public void items() {
+        if (inventario.size() == 0) {
+            System.out.println("No llevas ningun objeto");
+        }
+        else {
+            int pesoTotal = 0;
+            for (Item item : inventario) {
+                System.out.println(item.description());
+                pesoTotal += item.getItemWeight();
+            }
+            System.out.println("El peso total de los items que llevas es de: " + pesoTotal);
         }
     }
 }

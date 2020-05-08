@@ -1,4 +1,5 @@
 import java.util.Stack;
+import java.util.ArrayList;
 /**
  * Almacena todos los datos del jugador.
  * 
@@ -10,6 +11,7 @@ public class Player
 
     private Room currentRoom;
     private Stack<Room> rooms;
+    private ArrayList<Item> inventario;
 
     /**
      * Constructor for objects of class Player
@@ -18,6 +20,7 @@ public class Player
     {
         currentRoom = inicio;
         rooms = new Stack<>();
+        inventario = new ArrayList<>();
     }
 
     public Room getCurrentRoom() {
@@ -74,6 +77,35 @@ public class Player
         else {
             System.out.println("No puedes retroceder mas.");
         }
-
+    }
+    
+        public void take(Command comando) {
+        if(!comando.hasSecondWord()) {
+            System.out.println("coger que?");
+        }
+        else {
+            if (currentRoom.getItems().size() != 0) {
+                boolean itemCogido = false;
+                int contador = 0;
+                ArrayList<Item> itemsRoom = currentRoom.getItems();
+                while (contador < itemsRoom.size() && !itemCogido) {
+                    if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
+                    ) {
+                        inventario.add(itemsRoom.get(contador));
+                        itemCogido = true;
+                        System.out.println(itemsRoom.get(contador).getItemId() + " ha sido"
+                            + " añadido a tu inventario");
+                        currentRoom.deleteItems(comando.getSecondWord());
+                    }
+                    contador++;
+                }
+                if (!itemCogido) {
+                    System.out.println("No hay ningun objeto con ese nombre");
+                }
+            }
+            else {
+                System.out.println("Esta sala no contiene objetos");
+            }
+        }
     }
 }

@@ -106,8 +106,25 @@ public class Room
      *     Exits: north west southwest
      * @return Una descripcion completa de la habitacion incluyendo sus salidas
      */
-    public void addItem(String itemDesc, int itemWeight) {
-        Item item = new Item(itemDesc, itemWeight);
+    public void addItem(String itemDesc, int itemWeight, String itemId, boolean itemPickUp) {
+        Item item = new Item(itemDesc, itemWeight, itemId, itemPickUp);
         this.item.add(item);
+    }
+    
+     public ArrayList getItems() {
+        return item;
+    }
+    
+    public void deleteItems(String id) {
+        int contador = 0;
+        boolean eliminado = false;
+        
+        while (!eliminado) {
+            if (item.get(contador).getItemId().equals(id)) {
+                item.remove(contador);
+                eliminado = true;
+            }
+            contador++;
+        }
     }
 }

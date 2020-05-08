@@ -12,15 +12,19 @@ public class Player
     private Room currentRoom;
     private Stack<Room> rooms;
     private ArrayList<Item> inventario;
+    private int maxWeight;
+    private int itemsPeso;
 
     /**
      * Constructor for objects of class Player
      */
-    public Player(Room inicio)
+    public Player(Room inicio, int maxWeight)
     {
         currentRoom = inicio;
         rooms = new Stack<>();
         inventario = new ArrayList<>();
+        this.maxWeight = maxWeight;
+        itemsPeso = 0;
     }
 
     public Room getCurrentRoom() {
@@ -90,9 +94,11 @@ public class Player
                 ArrayList<Item> itemsRoom = currentRoom.getItems();
                 while (contador < itemsRoom.size() && !itemCogido) {
                     if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
-                    && itemsRoom.get(contador).getItemPickUp()) {
+                    && itemsRoom.get(contador).getItemPickUp()  
+                    && itemsPeso + itemsRoom.get(contador).getItemWeight() <= maxWeight) {
                         inventario.add(itemsRoom.get(contador));
                         itemCogido = true;
+                        itemsPeso += itemsRoom.get(contador).getItemWeight();
                         System.out.println(itemsRoom.get(contador).getItemId() + " ha sido"
                             + " añadido a tu inventario");
                         currentRoom.deleteItems(comando.getSecondWord());
@@ -100,6 +106,12 @@ public class Player
                     else if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
                     && !itemsRoom.get(contador).getItemPickUp()) {
                         System.out.println("No puedes recoger ese objeto");
+                        itemCogido = true;
+                    }
+                    else if (itemsRoom.get(contador).getItemId().equals(comando.getSecondWord()) 
+                    && itemsRoom.get(contador).getItemPickUp()  
+                    && itemsPeso + itemsRoom.get(contador).getItemWeight() > maxWeight) {
+                        System.out.println("No puedes llevar tanto peso");
                         itemCogido = true;
                     }
                     contador++;
@@ -141,6 +153,7 @@ public class Player
                     , inventario.get(contador).getItemWeight()
                     , inventario.get(contador).getItemId()
                     , inventario.get(contador).getItemPickUp());
+                    itemsPeso -= inventario.get(contador).getItemWeight();
                     System.out.println(inventario.get(contador).getItemId() + " ha sido "
                         + "quitado de tu inventario");
                     inventario.remove(contador);

@@ -28,7 +28,7 @@ public class Game
     public Game() 
     {
         parser = new Parser();
-        jugador = new Player(createRooms());
+        jugador = new Player(createRooms() , 6);
     }
 
     /**

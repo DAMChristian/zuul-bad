@@ -113,7 +113,7 @@ public class Player
             }
         }
     }
-    
+
     public void items() {
         if (inventario.size() == 0) {
             System.out.println("No llevas ningun objeto");
@@ -125,6 +125,33 @@ public class Player
                 pesoTotal += item.getItemWeight();
             }
             System.out.println("El peso total de los items que llevas es de: " + pesoTotal);
+        }
+    }
+
+    public void drop(Command comando) {
+        if(!comando.hasSecondWord()) {
+            System.out.println("Tirar el que?");
+        }
+        else {
+            boolean itemTirado = false;
+            int contador = 0;
+            while (!itemTirado && contador < inventario.size()) {
+                if (inventario.get(contador).getItemId().equals(comando.getSecondWord())) {
+                    currentRoom.addItem(inventario.get(contador).getItemDescription()
+                    , inventario.get(contador).getItemWeight()
+                    , inventario.get(contador).getItemId()
+                    , inventario.get(contador).getItemPickUp());
+                    System.out.println(inventario.get(contador).getItemId() + " ha sido "
+                        + "quitado de tu inventario");
+                    inventario.remove(contador);
+                    itemTirado = true;
+                }
+                contador++;
+            }
+            if (!itemTirado) {
+                System.out.println("No puedes tirar " + comando.getSecondWord() + " por"
+                    + "que no lo tienes en tu inventario");
+            }
         }
     }
 }

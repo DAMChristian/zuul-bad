@@ -78,6 +78,7 @@ public class Game
         salaRiquezas.addItem("Lingotes de Oro", 6, "oro", true);
         salaEsclavos.addItem("Anillo esmeralda", 2, "anillo", true);
         almacen.addItem("Llave desconocida", 1, "llave", true);
+        salaRituales.addItem("Libro de hechizos de la fuerza", 2, "hechizo", true);
 
         return inicio;  // start game outside
     }
@@ -151,6 +152,9 @@ public class Game
         }
         else if (commandWord.equals("drop")) {
             jugador.drop(command);
+        }
+        else if (commandWord.equals("read")) {
+            jugador.read(command);
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);

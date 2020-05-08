@@ -167,4 +167,30 @@ public class Player
             }
         }
     }
+
+    public void read(Command comando) {
+        if(!comando.hasSecondWord()) {
+            System.out.println("leer el que?");
+        }
+        else {
+            boolean itemLeido = false;
+            int contador = 0;
+            while (!itemLeido && contador < inventario.size()) {
+                if (inventario.get(contador).getItemId().equals(comando.getSecondWord())
+                    && inventario.get(contador).getItemId().equals("hechizo")) {
+                    itemLeido = true;
+                    itemsPeso -= inventario.get(contador).getItemWeight();
+                    inventario.remove(contador);
+                    maxWeight += 4;
+                    System.out.println("Tu peso se ha aumentado en 4, tu peso total es de: "
+                                        + maxWeight);
+                }
+                contador++;
+            }
+            if (!itemLeido) {
+                System.out.println("No puedes leer " + comando.getSecondWord() + " por"
+                    + "que no es un libro de hechizos");
+            }
+        }
+    }
 }
